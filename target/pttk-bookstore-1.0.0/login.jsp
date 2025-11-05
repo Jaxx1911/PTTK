@@ -1,122 +1,98 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PTTK Bookstore</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <title>Đăng nhập hệ thống</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+            width: 100%;
+            max-width: 450px;
+        }
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            margin-top: 20px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .alert {
+            border-radius: 10px;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="index.jsp">
-                <i class="fas fa-book"></i> PTTK Bookstore
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="index.jsp">Home</a>
+<body>
+    <div class="login-card">
+        <h1 class="login-title">Đăng nhập hệ thống</h1>
+
+        <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= request.getAttribute("error") %>
             </div>
-        </div>
-    </nav>
+        <% } %>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card shadow-sm mt-5">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h3><i class="fas fa-sign-in-alt"></i> User Login</h3>
-                    </div>
-                    <div class="card-body p-4">
-                        <!-- Display success message -->
-                        <c:if test="${not empty successMessage}">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="fas fa-check-circle"></i> ${successMessage}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        </c:if>
-
-                        <!-- Display error message -->
-                        <c:if test="${not empty errorMessage}">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-exclamation-circle"></i> ${errorMessage}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        </c:if>
-
-                        <form action="login" method="post">
-                            <div class="mb-3">
-                                <label for="usernameOrEmail" class="form-label">
-                                    <i class="fas fa-user"></i> Username or Email
-                                </label>
-                                <input type="text" class="form-control" id="usernameOrEmail" name="usernameOrEmail" 
-                                       value="${usernameOrEmail}" required autocomplete="username">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">
-                                    <i class="fas fa-lock"></i> Password
-                                </label>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       required autocomplete="current-password">
-                            </div>
-
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-                                <label class="form-check-label" for="rememberMe">
-                                    Remember me
-                                </label>
-                            </div>
-
-                            <input type="hidden" name="redirect" value="${param.redirect}">
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-sign-in-alt"></i> Login
-                                </button>
-                            </div>
-                        </form>
-
-                        <hr>
-
-                        <div class="text-center">
-                            <p class="mb-0">
-                                Don't have an account? 
-                                <a href="register" class="text-decoration-none">
-                                    <i class="fas fa-user-plus"></i> Register here
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Demo credentials info -->
-                <div class="card mt-3 border-info">
-                    <div class="card-header bg-info text-white">
-                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> Demo Credentials</h6>
-                    </div>
-                    <div class="card-body">
-                        <small class="text-muted">
-                            <strong>Username:</strong> admin<br>
-                            <strong>Password:</strong> password<br>
-                            <em>Or create a new account using the registration form.</em>
-                        </small>
-                    </div>
-                </div>
+        <% if (request.getAttribute("success") != null) { %>
+            <div class="alert alert-success" role="alert">
+                <%= request.getAttribute("success") %>
             </div>
+        <% } %>
+
+        <form action="${pageContext.request.contextPath}/login" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-login">Đăng nhập</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <small class="text-muted">Demo Customer: <strong>customer1</strong> / <strong>123456</strong></small><br>
+            <small class="text-muted">Demo Manager: <strong>manager1</strong> / <strong>123456</strong></small>
         </div>
     </div>
-
-    <footer class="bg-dark text-white py-3 mt-5">
-        <div class="container text-center">
-            <p class="mb-0 text-muted">
-                &copy; 2024 PTTK Bookstore. All rights reserved.
-            </p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>
+
