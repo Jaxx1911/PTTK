@@ -83,11 +83,5 @@ public class ImportInvoiceServlet extends HttpServlet {
         request.setAttribute("importInvoice", invoice);
         request.getRequestDispatcher("/manager/ImportInvoiceDetail.jsp").forward(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
 }
 

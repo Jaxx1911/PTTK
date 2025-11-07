@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS import_invoice (
                                               supplier_id INT NOT NULL,
                                               manager_id INT NOT NULL,
                                               import_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                                              total_amount FLOAT(10)
+                                              total_amount FLOAT(10),
+                                              total_quantity FLOAT(10),
     );
 
 CREATE TABLE IF NOT EXISTS import_invoice_product (

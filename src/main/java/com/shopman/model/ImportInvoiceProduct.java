@@ -1,5 +1,8 @@
 package com.shopman.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class ImportInvoiceProduct {
     private int quantity;
     private float unitImportPrice;
@@ -7,6 +10,16 @@ public class ImportInvoiceProduct {
     private Product product;
 
     public ImportInvoiceProduct() {}
+
+    public ImportInvoiceProduct(ResultSet rs) throws SQLException {
+        this.setQuantity(rs.getInt("quantity"));
+        this.setUnitImportPrice(rs.getFloat("unit_import_price"));
+        this.setSubTotal(rs.getFloat("sub_total"));
+
+        Product product = new Product(rs);
+
+        this.setProduct(product);
+    }
 
     public int getQuantity() {
         return quantity;

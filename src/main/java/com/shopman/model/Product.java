@@ -21,30 +21,11 @@ public class Product {
     }
 
     public Product(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("id");
-        this.name = rs.getString("name");
-        this.description = rs.getString("description");
-        this.price = rs.getDouble("price");
-        this.unit = rs.getString("unit");
-    }
-
-    public static Product fromResultSet(ResultSet rs) throws SQLException {
-        if (rs == null) return null;
-        int id = rs.getInt("id");
-        String name = "";
-        // try common column names
-        try { name = rs.getString("name"); } catch (Exception ignored) {}
-
-        String description = null;
-        try { description = rs.getString("description"); } catch (Exception ignored) {}
-
-        double price = 0;
-        try { price = rs.getDouble("price"); } catch (Exception ignored) {}
-
-        String unit = "";
-        try { unit = rs.getString("unit"); } catch (Exception ignored) {}
-
-        return new Product(id, name, description, price, unit);
+        this.setId(rs.getInt("product_id"));
+        this.setName(rs.getString("name"));
+        this.setDescription(rs.getString("description"));
+        this.setPrice((float) rs.getDouble("price"));
+        this.setUnit(rs.getString("unit"));
     }
 
     public int getId() {

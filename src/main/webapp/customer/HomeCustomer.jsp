@@ -18,7 +18,7 @@
     <style>
         .customer-home {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,10 +46,20 @@
             font-size: 1.3rem;
             font-weight: 600;
             border-radius: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             border: none;
             color: white;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+            display: block;
+        }
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+            background: #5568d3;
+            color: white;
+        }
         .user-info {
             text-align: center;
             margin-bottom: 30px;
@@ -69,17 +79,6 @@
         .btn-logout:hover {
             background: #5a6268;
             color: white;
-        }
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        .search-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-
-            <div class="user-info">
-                <strong>Xin chào, <%= session.getAttribute("userName") != null ? session.getAttribute("userName") : session.getAttribute("username") %>!</strong>
-            </div>
 
         }
     </style>

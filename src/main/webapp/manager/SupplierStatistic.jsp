@@ -15,7 +15,7 @@
         .report-card { background: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 40px; }
         .page-title { font-size: 1.8rem; font-weight: 700; color: #2d3748; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #667eea; padding-bottom: 15px; }
         .date-filter { background: #f7fafc; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
-        .supplier-table th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; text-align: center; padding: 15px 10px; border: none; }
+        .supplier-table th { background: #667eea; color: white; font-weight: 600; text-align: center; padding: 15px 10px; border: none; }
         .supplier-table td { text-align: center; padding: 12px 10px; vertical-align: middle; border-bottom: 1px solid #e2e8f0; }
         .supplier-table tbody tr:hover { background: #f7fafc; cursor: pointer; }
         .supplier-link { color: #667eea; text-decoration: none; font-weight: 600; }

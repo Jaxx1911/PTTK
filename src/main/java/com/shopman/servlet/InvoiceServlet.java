@@ -51,18 +51,6 @@ public class InvoiceServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Hiển thị danh sách hoá đơn của khách hàng
-     */
-    private void showInvoiceList(HttpServletRequest request, HttpServletResponse response, int customerId)
-            throws ServletException, IOException, SQLException {
-
-
-    }
-
-    /**
-     * Hiển thị chi tiết một hoá đơn
-     */
     private void showInvoiceDetail(HttpServletRequest request, HttpServletResponse response, int customerId)
             throws ServletException, IOException, SQLException {
 
@@ -88,12 +76,6 @@ public class InvoiceServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("/customer/InvoiceDetail.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
 }
 

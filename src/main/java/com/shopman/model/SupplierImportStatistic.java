@@ -1,5 +1,9 @@
 package com.shopman.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
 public class SupplierImportStatistic {
     private int importAmount;
     private float totalImportPrice;
@@ -9,6 +13,22 @@ public class SupplierImportStatistic {
     private Supplier supplier;
 
     public SupplierImportStatistic() {}
+
+    public SupplierImportStatistic(ResultSet rs, Date startDate, Date endDate) throws SQLException {
+        this.setStartDate(startDate);
+        this.setEndDate(endDate);
+        this.setImportAmount((int) rs.getDouble("total_quantity"));
+        this.setTotalImportPrice(rs.getFloat("total_amount"));
+        this.setTotalImports(rs.getInt("count"));
+
+        Supplier supplier = new Supplier();
+        supplier.setId(rs.getInt("id"));
+        supplier.setName(rs.getString("name"));
+        supplier.setAddress(rs.getString("address"));
+        supplier.setPhone(rs.getString("phone"));
+        supplier.setEmail(rs.getString("email"));
+        this.setSupplier(supplier);
+    }
 
     public int getImportAmount() {
         return importAmount;

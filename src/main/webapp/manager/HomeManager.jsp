@@ -17,7 +17,7 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -67,8 +67,8 @@
             margin-bottom: 10px;
             transition: all 0.3s ease;
         }
-        .menu-btn:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .feature-card:hover {
+            background: #667eea;
             color: white;
             border-color: #667eea;
             transform: translateX(5px);

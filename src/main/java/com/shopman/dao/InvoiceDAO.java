@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceDAO {
+public class InvoiceDAO extends DAO {
     public List<Invoice> getInvoicesByCustomerId(int customerId) throws SQLException {
         List<Invoice> invoices = new ArrayList<>();
         String sql = "SELECT i.id, i.date, i.total_amount, i.status " +
@@ -22,16 +22,7 @@ public class InvoiceDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Invoice invoice = new Invoice();
-                invoice.setId(rs.getInt("id"));
-                invoice.setDate(rs.getTimestamp("date"));
-                invoice.setTotalAmount((float) rs.getDouble("total_amount"));
-                invoice.setStatus(rs.getString("status"));
-
-                // Tạo customer object
-                Customer customer = new Customer();
-                customer.setId(customerId);
-                invoice.setCustomer(customer);
+                Invoice invoice = new Invoice(rs, customerId);
 
                 invoices.add(invoice);
             }
@@ -42,7 +33,6 @@ public class InvoiceDAO {
 
     public Invoice getInvoiceDetail(int invoiceId) throws SQLException {
         Invoice invoice = new Invoice();
-        List<InvoiceProduct> products = new ArrayList<>();
         String sql1 = "SELECT i.id, i.date, i.total_amount, i.status, " +
                 "c.id as customer_id, cu.name as customer_name, cu.email, c.phone, " +
                 "i.sale_staff_id, ss.name as sale_staff_name, " +
@@ -60,66 +50,20 @@ public class InvoiceDAO {
                 "JOIN product p ON ip.product_id = p.id " +
                 "WHERE ip.invoice_id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql1)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql1);
+             PreparedStatement stmt2 = conn.prepareStatement(sql2);
+        ) {
 
             stmt.setInt(1, invoiceId);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                invoice.setId(rs.getInt("id"));
-                invoice.setDate(rs.getTimestamp("date"));
-                invoice.setTotalAmount((float) rs.getDouble("total_amount"));
-                invoice.setStatus(rs.getString("status"));
-
-                // Tạo customer object
-                Customer customer = new Customer();
-                customer.setId(rs.getInt("customer_id"));
-                customer.setName(rs.getString("customer_name"));
-                customer.setEmail(rs.getString("email"));
-                customer.setPhone(rs.getString("phone"));
-                invoice.setCustomer(customer);
-
-                // Tạo SaleStaff object nếu có
-                int saleStaffId = rs.getInt("sale_staff_id");
-                if (!rs.wasNull() && saleStaffId > 0) {
-                    SaleStaff saleStaff = new SaleStaff();
-                    saleStaff.setId(saleStaffId);
-                    saleStaff.setName(rs.getString("sale_staff_name"));
-                    invoice.setSaleStaff(saleStaff);
-                }
-
-                // Tạo DeliveryStaff object nếu có
-                int deliveryStaffId = rs.getInt("delivery_staff_id");
-                if (!rs.wasNull() && deliveryStaffId > 0) {
-                    DeliveryStaff deliveryStaff = new DeliveryStaff();
-                    deliveryStaff.setId(deliveryStaffId);
-                    deliveryStaff.setName(rs.getString("delivery_staff_name"));
-                    invoice.setDeliveryStaff(deliveryStaff);
-                }
+            stmt2.setInt(1, invoiceId);
+            ResultSet rs1 = stmt.executeQuery();
+            ResultSet rs2 = stmt2.executeQuery();
+            if(rs1.next()){
+                invoice = new Invoice(rs1, rs2);
             }
-        }
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql2)) {
-
-            stmt.setInt(1, invoiceId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                InvoiceProduct invoiceProduct = new InvoiceProduct(rs);
-                invoiceProduct.setQuantity(rs.getInt("quantity"));
-                invoiceProduct.setUnitPrice(rs.getDouble("unit_price"));
-                invoiceProduct.setSubtotal(rs.getDouble("sub_total"));
-
-                products.add(invoiceProduct);
-            }
-
-            invoice.setProducts(products);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return invoice;
     }
 }

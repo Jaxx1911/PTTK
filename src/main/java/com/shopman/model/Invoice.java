@@ -1,5 +1,7 @@
 package com.shopman.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +36,47 @@ public class Invoice {
         this.totalAmount = totalAmount;
         this.status = status;
         this.customer = customer;
+    }
+
+    public Invoice(ResultSet rs, int customerId) throws SQLException {
+        this.setId(rs.getInt("id"));
+        this.setDate(rs.getTimestamp("date"));
+        this.setTotalAmount((float) rs.getDouble("total_amount"));
+        this.setStatus(rs.getString("status"));
+
+        Customer customer = new Customer(customerId);
+        this.setCustomer(customer);
+    }
+
+    public Invoice(ResultSet rs, ResultSet rs2) throws Exception {
+        this.setId(rs.getInt("id"));
+        this.setDate(rs.getTimestamp("date"));
+        this.setTotalAmount((float) rs.getDouble("total_amount"));
+        this.setStatus(rs.getString("status"));
+        this.setCustomer(new Customer(rs));
+
+        int saleStaffId = rs.getInt("sale_staff_id");
+        if (!rs.wasNull() && saleStaffId > 0) {
+            SaleStaff saleStaff = new SaleStaff();
+            saleStaff.setId(saleStaffId);
+            saleStaff.setName(rs.getString("sale_staff_name"));
+            this.setSaleStaff(saleStaff);
+        }
+
+        int deliveryStaffId = rs.getInt("delivery_staff_id");
+        if (!rs.wasNull() && deliveryStaffId > 0) {
+            DeliveryStaff deliveryStaff = new DeliveryStaff();
+            deliveryStaff.setId(deliveryStaffId);
+            deliveryStaff.setName(rs.getString("delivery_staff_name"));
+            this.setDeliveryStaff(deliveryStaff);
+        }
+
+        List<InvoiceProduct> products = new ArrayList<>();
+        while (rs2.next()) {
+            InvoiceProduct invoiceProduct = new InvoiceProduct(rs2);
+            products.add(invoiceProduct);
+        }
+        this.productsDetail = products;
     }
 
     public List<InvoiceProduct> getProducts() {

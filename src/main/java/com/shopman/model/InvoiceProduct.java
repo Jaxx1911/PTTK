@@ -18,10 +18,11 @@ public class InvoiceProduct {
     }
 
     public InvoiceProduct(ResultSet rs) throws Exception {
-        this.quantity = rs.getInt("quantity");
-        this.unitPrice = rs.getDouble("unit_price");
-        this.subtotal = rs.getDouble("sub_total");
         this.product = new Product(rs);
+
+        this.setQuantity(rs.getInt("quantity"));
+        this.setUnitPrice(rs.getDouble("unit_price"));
+        this.setSubtotal(rs.getDouble("sub_total"));
     }
 
     public Product getProduct() {

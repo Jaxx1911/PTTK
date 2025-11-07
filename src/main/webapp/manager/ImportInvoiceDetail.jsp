@@ -49,7 +49,7 @@
             color: #2d3748;
         }
         .product-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
             font-weight: 600;
             text-align: center;
