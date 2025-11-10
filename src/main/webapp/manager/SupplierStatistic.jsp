@@ -60,11 +60,11 @@
                     </thead>
                     <tbody>
                         <c:forEach var="statistic" items="${listSupplierImportStatistic}" varStatus="status">
-                            <tr onclick="window.location.href='${pageContext.request.contextPath}/import-invoice?supplierId=${statistic.supplier.id}&supplierName=${statistic.supplier.name}&startDate=${startDate}&endDate=${endDate}'">
+                            <tr onclick="window.location.href='${pageContext.request.contextPath}/import-invoice?supplierId=${statistic.id}&supplierName=${statistic.name}&startDate=${startDate}&endDate=${endDate}'">
                                 <td>${status.index + 1}</td>
                                 <td class="text-start">
-                                    <a href="${pageContext.request.contextPath}/import-invoice?supplierId=${statistic.supplier.id}&supplierName=${statistic.supplier.name}&startDate=${startDate}&endDate=${endDate}"
-                                       class="supplier-link">${statistic.supplier.name}</a>
+                                    <a href="${pageContext.request.contextPath}/import-invoice?supplierId=${statistic.id}&supplierName=${statistic.name}&startDate=${startDate}&endDate=${endDate}"
+                                       class="supplier-link">${statistic.name}</a>
                                 </td>
                                 <td><fmt:formatNumber value="${statistic.importAmount}" type="number" maxFractionDigits="0" groupingUsed="true" /></td>
                                 <td><fmt:formatNumber value="${statistic.totalImportPrice}" type="number" groupingUsed="true" /> VNĐ</td>
@@ -78,10 +78,6 @@
             <c:if test="${empty listSupplierImportStatistic && not empty startDate}">
                 <div class="alert alert-info text-center">Không có dữ liệu trong khoảng thời gian này.</div>
             </c:if>
-
-            <div class="text-center mt-3">
-                <a href="${pageContext.request.contextPath}/manager/HomeManager.jsp" class="btn btn-secondary">← Quay lại</a>
-            </div>
         </div>
     </div>
 </body>

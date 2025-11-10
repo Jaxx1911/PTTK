@@ -38,7 +38,28 @@ public class InvoiceServlet extends HttpServlet {
         try {
 
             if ("detail".equals(action)) {
-                showInvoiceDetail(request, response, userId);
+                String invoiceIdParam = request.getParameter("invoiceId");
+
+                if (invoiceIdParam == null || invoiceIdParam.trim().isEmpty()) {
+                    request.setAttribute("error", "Mã hoá đơn không hợp lệ.");
+                    request.getRequestDispatcher("/customer/InvoiceDetail.jsp").forward(request, response);
+                    return;
+                }
+
+                try {
+                    int invoiceId = Integer.parseInt(invoiceIdParam);
+                    Invoice invoice = invoiceDAO.getInvoiceDetail(invoiceId);
+
+                    if (invoice == null || invoice.getCustomer().getId() != userId) {
+                        request.setAttribute("error", "Không tìm thấy hoá đơn hoặc bạn không có quyền truy cập.");
+                    } else {
+                        request.setAttribute("invoice", invoice);
+                    }
+                } catch (NumberFormatException e) {
+                    request.setAttribute("error", "Mã hoá đơn không hợp lệ.");
+                }
+
+                request.getRequestDispatcher("/customer/InvoiceDetail.jsp").forward(request, response);
             } else {
                 List<Invoice> invoices = invoiceDAO.getInvoicesByCustomerId(userId);
                 request.setAttribute("invoices", invoices);
@@ -49,33 +70,6 @@ public class InvoiceServlet extends HttpServlet {
             request.setAttribute("error", "Lỗi khi truy vấn dữ liệu: " + e.getMessage());
             request.getRequestDispatcher("/customer/SearchInvoice.jsp").forward(request, response);
         }
-    }
-
-    private void showInvoiceDetail(HttpServletRequest request, HttpServletResponse response, int customerId)
-            throws ServletException, IOException, SQLException {
-
-        String invoiceIdParam = request.getParameter("invoiceId");
-
-        if (invoiceIdParam == null || invoiceIdParam.trim().isEmpty()) {
-            request.setAttribute("error", "Mã hoá đơn không hợp lệ.");
-            request.getRequestDispatcher("/customer/InvoiceDetail.jsp").forward(request, response);
-            return;
-        }
-
-        try {
-            int invoiceId = Integer.parseInt(invoiceIdParam);
-            Invoice invoice = invoiceDAO.getInvoiceDetail(invoiceId);
-
-            if (invoice == null || invoice.getCustomer().getId() != customerId) {
-                request.setAttribute("error", "Không tìm thấy hoá đơn hoặc bạn không có quyền truy cập.");
-            } else {
-                request.setAttribute("invoice", invoice);
-            }
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Mã hoá đơn không hợp lệ.");
-        }
-
-        request.getRequestDispatcher("/customer/InvoiceDetail.jsp").forward(request, response);
     }
 }
 

@@ -84,9 +84,6 @@
     </style>
 </head>
 
-            <div class="text-center">
-                <a href="${pageContext.request.contextPath}/logout" class="btn-logout">Đăng xuất</a>
-            </div>
 <body>
     <div class="customer-home">
         <div class="home-card">
@@ -94,6 +91,9 @@
             <a href="${pageContext.request.contextPath}/invoice" class="btn search-btn">
                 Tra cứu hóa đơn
             </a>
+        </div>
+        <div class="text-center">
+            <a href="${pageContext.request.contextPath}/logout" class="btn-logout">Đăng xuất</a>
         </div>
     </div>
 

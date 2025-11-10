@@ -156,12 +156,6 @@
                     </tr>
                 </tfoot>
             </table>
-
-            <div class="text-center">
-                <a href="javascript:history.back()" class="btn-back">
-                    ← Quay lại
-                </a>
-            </div>
         </div>
     </div>
 

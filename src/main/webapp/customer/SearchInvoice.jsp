@@ -174,12 +174,6 @@
                     </div>
                 </c:otherwise>
             </c:choose>
-
-            <div class="text-center">
-                <a href="${pageContext.request.contextPath}/customer/HomeCustomer.jsp" class="btn-back">
-                    ← Quay lại
-                </a>
-            </div>
         </div>
     </div>
 

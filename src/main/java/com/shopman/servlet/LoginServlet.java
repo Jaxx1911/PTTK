@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            // Xác thực đăng nhập thông qua UserDAO (không giới hạn role)
             User user = userDAO.authenticate(username, password, null);
 
             if (user != null) {
@@ -63,7 +62,6 @@ public class LoginServlet extends HttpServlet {
                     request.getRequestDispatcher("/Login.jsp").forward(request, response);
                 }
             } else {
-                // Đăng nhập thất bại
                 request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
                 request.getRequestDispatcher("/Login.jsp").forward(request, response);
             }

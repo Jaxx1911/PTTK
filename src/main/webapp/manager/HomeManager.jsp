@@ -106,10 +106,10 @@
         <div class="menu-section">
             <div class="menu-title">Xem báo cáo</div>
             <a href="${pageContext.request.contextPath}/supplier-import-statistic" class="menu-btn">
-                ✓ Xem thống kê nhà cung cấp theo lượng hàng nhập
+                Xem thống kê nhà cung cấp theo lượng hàng nhập
             </a>
             <a class="menu-btn">
-                ✓ Xem thống kê khách hàng đặt nhiều
+                Xem thống kê khách hàng đặt nhiều
             </a>
         </div>
 

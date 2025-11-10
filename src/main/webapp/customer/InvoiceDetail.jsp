@@ -145,17 +145,6 @@
             <h1 class="page-title">Chi tiết hóa đơn</h1>
 
             <c:choose>
-                <c:when test="${not empty error}">
-                    <div class="alert alert-danger" role="alert">
-                        ${error}
-                    </div>
-                    <div class="text-center">
-                        <a href="${pageContext.request.contextPath}/invoice" class="btn-back">
-                            ← Quay lại danh sách
-                        </a>
-                    </div>
-                </c:when>
-
                 <c:when test="${not empty invoice}">
                     <div class="info-section">
                         <div class="info-row">
@@ -253,12 +242,6 @@
                                 </c:choose>
                             </span>
                         </div>
-                    </div>
-
-                    <div class="text-center">
-                        <a href="${pageContext.request.contextPath}/invoice" class="btn-back">
-                            ← Quay lại danh sách
-                        </a>
                     </div>
                 </c:when>
 

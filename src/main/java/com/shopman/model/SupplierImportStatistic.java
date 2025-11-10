@@ -4,37 +4,34 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class SupplierImportStatistic {
-    private int importAmount;
+public class SupplierImportStatistic extends Supplier {
+    private float importAmount;
     private float totalImportPrice;
     private int totalImports;
     private java.util.Date startDate;
     private java.util.Date endDate;
-    private Supplier supplier;
 
     public SupplierImportStatistic() {}
 
     public SupplierImportStatistic(ResultSet rs, Date startDate, Date endDate) throws SQLException {
         this.setStartDate(startDate);
         this.setEndDate(endDate);
-        this.setImportAmount((int) rs.getDouble("total_quantity"));
+        this.setImportAmount((rs.getFloat("total_quantity")));
         this.setTotalImportPrice(rs.getFloat("total_amount"));
         this.setTotalImports(rs.getInt("count"));
 
-        Supplier supplier = new Supplier();
-        supplier.setId(rs.getInt("id"));
-        supplier.setName(rs.getString("name"));
-        supplier.setAddress(rs.getString("address"));
-        supplier.setPhone(rs.getString("phone"));
-        supplier.setEmail(rs.getString("email"));
-        this.setSupplier(supplier);
+        this.setId(rs.getInt("id"));
+        this.setName(rs.getString("name"));
+        this.setAddress(rs.getString("address"));
+        this.setPhone(rs.getString("phone"));
+        this.setEmail(rs.getString("email"));
     }
 
-    public int getImportAmount() {
+    public float getImportAmount() {
         return importAmount;
     }
 
-    public void setImportAmount(int importAmount) {
+    public void setImportAmount(float importAmount) {
         this.importAmount = importAmount;
     }
 
@@ -68,14 +65,6 @@ public class SupplierImportStatistic {
 
     public void setEndDate(java.util.Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
     }
 }
 

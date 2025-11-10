@@ -38,50 +38,38 @@ public class ImportInvoiceServlet extends HttpServlet {
 
         try {
             if ("detail".equals(action)) {
-                viewInvoiceDetail(request, response);
+                int invoiceId = Integer.parseInt(request.getParameter("invoiceId"));
+                ImportInvoice invoice = importInvoiceDAO.getImportInvoiceDetail(invoiceId);
+
+                request.setAttribute("importInvoice", invoice);
+                request.getRequestDispatcher("/manager/ImportInvoiceDetail.jsp").forward(request, response);
             } else {
-                viewImportInvoiceList(request, response);
+                int supplierId = Integer.parseInt(request.getParameter("supplierId"));
+                String supplierName = request.getParameter("supplierName");
+                String startDateStr = request.getParameter("startDate");
+                String endDateStr = request.getParameter("endDate");
+
+                Date startDate = Date.valueOf(startDateStr);
+                Date endDate = Date.valueOf(endDateStr);
+
+                List<ImportInvoice> invoices = importInvoiceDAO.getListImportInvoice(supplierId, startDate, endDate);
+
+                Supplier supplier = new Supplier();
+                supplier.setId(supplierId);
+                supplier.setName(supplierName);
+
+                request.setAttribute("supplier", supplier);
+                request.setAttribute("listImportInvoice", invoices);
+                request.setAttribute("startDate", startDateStr);
+                request.setAttribute("endDate", endDateStr);
+
+                request.getRequestDispatcher("/manager/ListImportInvoice.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Lỗi khi truy vấn dữ liệu: " + e.getMessage());
             request.getRequestDispatcher("/manager/ListImportInvoice.jsp").forward(request, response);
         }
-    }
-
-    private void viewImportInvoiceList(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-
-        int supplierId = Integer.parseInt(request.getParameter("supplierId"));
-        String supplierName = request.getParameter("supplierName");
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-
-        Date startDate = Date.valueOf(startDateStr);
-        Date endDate = Date.valueOf(endDateStr);
-
-        List<ImportInvoice> invoices = importInvoiceDAO.getListImportInvoice(supplierId, startDate, endDate);
-
-        Supplier supplier = new Supplier();
-        supplier.setId(supplierId);
-        supplier.setName(supplierName);
-
-        request.setAttribute("supplier", supplier);
-        request.setAttribute("listImportInvoice", invoices);
-        request.setAttribute("startDate", startDateStr);
-        request.setAttribute("endDate", endDateStr);
-
-        request.getRequestDispatcher("/manager/ListImportInvoice.jsp").forward(request, response);
-    }
-
-    private void viewInvoiceDetail(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-
-        int invoiceId = Integer.parseInt(request.getParameter("invoiceId"));
-        ImportInvoice invoice = importInvoiceDAO.getImportInvoiceDetail(invoiceId);
-
-        request.setAttribute("importInvoice", invoice);
-        request.getRequestDispatcher("/manager/ImportInvoiceDetail.jsp").forward(request, response);
     }
 }
 

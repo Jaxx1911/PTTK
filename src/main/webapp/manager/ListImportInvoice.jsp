@@ -63,11 +63,6 @@
             <c:if test="${empty listImportInvoice}">
                 <div class="alert alert-info text-center">Không có lần nhập hàng nào trong khoảng thời gian này.</div>
             </c:if>
-
-            <div class="text-center">
-                <a href="${pageContext.request.contextPath}/supplier-import-statistic?startDate=${startDate}&endDate=${endDate}"
-                   class="btn btn-secondary">← Quay lại thống kê</a>
-            </div>
         </div>
     </div>
 </body>
